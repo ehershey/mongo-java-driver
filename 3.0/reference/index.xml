@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>References on MongoDB Java Driver</title>
+    <link>/mongo-java-driver/3.0/reference/</link>
+    <description>Recent content in References on MongoDB Java Driver</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Mar 2015 22:39:26 -0400</lastBuildDate>
+    <atom:link href="/mongo-java-driver/3.0/reference/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>JSON support</title>
+      <link>/mongo-java-driver/3.0/reference/json-support/</link>
+      <pubDate>Thu, 19 Mar 2015 22:39:26 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/json-support/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>System Requirements</title>
+      <link>/mongo-java-driver/3.0/reference/system-requirements/</link>
+      <pubDate>Thu, 19 Mar 2015 16:39:22 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/system-requirements/</guid>
+      <description>
+
+&lt;h1 id=&#34;system-requirements:713449ef5ae6758386844a511f29cc91&#34;&gt;System Requirements&lt;/h1&gt;
+
+&lt;p&gt;The 3.0 Java driver will run with Java 6 or later.  However, specific features require Java 7:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;By default SSL support requires Java 7 in order to perform SSL host name verification, which is enabled by default.  See
+&lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/ssl/#host-name-verification:3c79738ba42290c5c30beda88b41710e&#34;&gt;SSL&lt;/a&gt; for details on how to disable host name verification.&lt;/li&gt;
+&lt;li&gt;By default the asynchronous API requires Java 7, as it relies on
+&lt;a href=&#34;http://docs.oracle.com/javase/7/docs/api/java/nio/channels/AsynchronousSocketChannel.html&#34;&gt;AsynchronousSocketChannel&lt;/a&gt; for
+its implementation.  See &lt;a href=&#34;No page found with path or logical name &#34;async&#34;.
+&#34;&gt;Async&lt;/a&gt; for details on how to use &lt;a href=&#34;http://netty.io/&#34;&gt;Netty&lt;/a&gt; instead.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Authenticating</title>
+      <link>/mongo-java-driver/3.0/reference/authenticating/</link>
+      <pubDate>Thu, 19 Mar 2015 14:27:51 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/authenticating/</guid>
+      <description>
+
+&lt;h1 id=&#34;authenticating:7010764a78ee04293fe005f4d2277400&#34;&gt;Authenticating&lt;/h1&gt;
+
+&lt;p&gt;The Java driver supports all MongoDB &lt;a href=&#34;http://docs.mongodb.org/manual/core/authentication/&#34;&gt;authentication mechanisms&lt;/a&gt;, including those
+included only in the &lt;a href=&#34;http://docs.mongodb.org/manual/administration/install-enterprise/&#34;&gt;Enterprise Edition&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Authentication credentials are created by the application as instances of
+&lt;a href=&#34;http://api.mongodb.org/java/current/com/mongodb/MongoCredential.html&#34;&gt;MongoCredential&lt;/a&gt;, which includes static factory methods for each
+of the supported authentication mechanisms.  A list of these instances must be passed to the driver via one of several
+ &lt;a href=&#34;http://api.mongodb.org/java/current/com/mongodb/MongoCredential.html&#34;&gt;MongoClient&lt;/a&gt; constructors that take a
+ parameter of type &lt;code&gt;List&amp;lt;MongoCredential&amp;gt;&lt;/code&gt;.   Note that due to the flexibilty of role-based access control in MongoDB, it is usually
+ sufficient to authenticate with a single user, but for completeness the driver takes a list of credentials is always accepted.&lt;/p&gt;
+
+&lt;h2 id=&#34;default-authentication-mechanism:7010764a78ee04293fe005f4d2277400&#34;&gt;Default authentication mechanism&lt;/h2&gt;
+
+&lt;p&gt;MongoDB 3.0 changed the default authentication mechanism from
+&lt;a href=&#34;http://docs.mongodb.org/manual/core/authentication/#mongodb-cr-authentication&#34;&gt;MONGODB-CR&lt;/a&gt; to
+&lt;a href=&#34;http://docs.mongodb.org/manual/core/authentication/#scram-sha-1-authentication&#34;&gt;SCRAM-SHA-1&lt;/a&gt;.  To create a credential that will
+authenticate properly regardless of server version, create a credential using the following static factory method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;   import com.mongodb.MongoCredential;
+
+    // ...
+
+    String user;        // the user name
+    String database;    // the name of the database in which the user is defined
+    char[] password;    // the password as a character array
+    // ...
+    MongoCredential credential = MongoCredential.createCredential(user,
+                                                                  database,
+                                                                  password);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or with a connection string:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    MongoClientURI uri = new MongoClientURI(&amp;quot;mongodb://user1:pwd1@host1/?authSource=db1&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is the recommended approach as it will make upgrading from MongoDB 2.6 to MongoDB 3.0 seamless, even after &lt;a href=&#34;http://docs.mongodb.org/manual/release-notes/3.0-scram/#upgrade-mongodb-cr-to-scram&#34;&gt;upgrading the
+authentication schema&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;scram-sha-1:7010764a78ee04293fe005f4d2277400&#34;&gt;SCRAM-SHA-1&lt;/h2&gt;
+
+&lt;p&gt;To explicitly create a credential of type &lt;a href=&#34;http://docs.mongodb .org/manual/core/authentication/#scram-sha-1-authentication&#34;&gt;SCRAM-SHA-1&lt;/a&gt;
+use the following static factory method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    MongoCredential credential = MongoCredential.createScramSha1Credential(user,
+                                                                           database,
+                                                                           password);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or with a connection string:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    MongoClientURI uri = new MongoClientURI(&amp;quot;mongodb://user1:pwd1@host1/?authSource=db1&amp;amp;authMechanism=SCRAM-SHA-1&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;mongodb-cr:7010764a78ee04293fe005f4d2277400&#34;&gt;MONGODB-CR&lt;/h2&gt;
+
+&lt;p&gt;To explicitly create a credential of type &lt;a href=&#34;http://docs.mongodb.org/manual/core/authentication/#mongodb-cr-authentication&#34;&gt;MONGODB-CR&lt;/a&gt;
+use the following static factory method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    MongoCredential credential = MongoCredential.createMongoCRCredential(user,
+                                                                         database,
+                                                                         password);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or with a connection string:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    MongoClientURI uri = new MongoClientURI(&amp;quot;mongodb://user1:pwd1@host1/?authSource=db1&amp;amp;authMechanism=MONGODB-CR&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that this is not recommended as a credential created in this way will fail to authenticate after an authentication schema upgrade
+from MONGODB-CR to SCRAM-SHA-1.&lt;/p&gt;
+
+&lt;h2 id=&#34;x-509:7010764a78ee04293fe005f4d2277400&#34;&gt;x.509&lt;/h2&gt;
+
+&lt;p&gt;The &lt;a href=&#34;http://docs.mongodb.org/manual/core/authentication/#x-509-certificate-authentication&#34;&gt;x.509&lt;/a&gt; mechanism authenticates a user
+whose name is derived from the distinguished subject name of the X.509 certificate presented by the driver during SSL negotiation. This
+authentication method requires the use of SSL connections with certificate validation and is available in MongoDB 2.6 and newer. To
+create a credential of this type use the following static factory method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    String user;     // The x.509 certificate derived user name
+    MongoCredential credential = MongoCredential.createMongoX509Credential(user);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or with a connection string:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    MongoClientURI uri = new MongoClientURI(&amp;quot;mongodb://subjectName@host1/?authMechanism=MONGODB-X509&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See the MongoDB server
+&lt;a href=&#34;http://docs.mongodb.org/manual/tutorial/configure-x509-client-authentication/#add-x-509-certificate-subject-as-a-user&#34;&gt;x.509 tutorial&lt;/a&gt; for
+more information about determining the subject name from the certificate.&lt;/p&gt;
+
+&lt;h2 id=&#34;kerberos-gssapi:7010764a78ee04293fe005f4d2277400&#34;&gt;Kerberos (GSSAPI)&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.mongodb.com/products/mongodb-enterprise&#34;&gt;MongoDB Enterprise&lt;/a&gt; supports proxy authentication through Kerberos service.  To
+create a credential of type &lt;a href=&#34;http://docs.mongodb.org/manual/core/authentication/#kerberos-authentication&#34;&gt;Kerberos (GSSAPI)&lt;/a&gt; use the
+following static factory method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    String user;   // The Kerberos user name, including the realm, e.g. &amp;quot;user1@MYREALM.ME&amp;quot;
+    // ...
+    MongoCredential credential = MongoCredential.createGSSAPICredential(user);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    MongoClientURI uri = new MongoClientURI(&amp;quot;mongodb://username%40REALM.com@host1/?authMechanism=GSSAPI&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that the method refers to the &lt;code&gt;GSSAPI&lt;/code&gt; authentication mechanism instead of &lt;code&gt;Kerberos&lt;/code&gt; because technically the driver is authenticating
+via the &lt;a href=&#34;https://tools.ietf.org/html/rfc4752&#34;&gt;GSSAPI&lt;/a&gt; SASL mechanism.&lt;/p&gt;
+
+&lt;p&gt;To successfully authenticate via Kerberos, the application typically must specify several system properties so that the underlying GSSAPI
+ Java libraries can acquire a Kerberos ticket:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;java.security.krb5.realm=MYREALM.ME
+java.security.krb5.kdc=mykdc.myrealm.me
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;ldap-plain:7010764a78ee04293fe005f4d2277400&#34;&gt;LDAP (PLAIN)&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.mongodb.com/products/mongodb-enterprise&#34;&gt;MongoDB Enterprise&lt;/a&gt; supports proxy authentication through a Lightweight Directory
+Access Protocol (LDAP) service.  To create a credential of type &lt;a href=&#34;http://docs.mongodb
+.org/manual/core/authentication/#ldap-proxy-authority-authentication&#34;&gt;LDAP&lt;/a&gt; use the following static factory method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    String user;          // The LDAP user name
+    char[] password;      // The LDAP password
+    // ...
+    MongoCredential credential = MongoCredential.createPlainCredential(user, &amp;quot;$external&amp;quot;, password);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or with a connection string:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    MongoClientURI uri = new MongoClientURI(&amp;quot;mongodb://user1@host1/?authSource=$external&amp;amp;authMechanism=PLAIN&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that the method refers to the &lt;code&gt;plain&lt;/code&gt; authentication mechanism instead of &lt;code&gt;LDAP&lt;/code&gt; because technically the driver is authenticating
+via the &lt;a href=&#34;https://www.ietf.org/rfc/rfc4616.txt&#34;&gt;PLAIN&lt;/a&gt; SASL mechanism.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Connecting</title>
+      <link>/mongo-java-driver/3.0/reference/connecting/</link>
+      <pubDate>Thu, 19 Mar 2015 12:53:30 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/connecting/</guid>
+      <description>
+
+&lt;h2 id=&#34;connecting-to-mongodb:d67a243cdf521fafcb45cf3f560d3e12&#34;&gt;Connecting to MongoDB&lt;/h2&gt;
+
+&lt;p&gt;General information about connecting to MongoDB servers.&lt;/p&gt;
+
+&lt;h3 id=&#34;connection-string:d67a243cdf521fafcb45cf3f560d3e12&#34;&gt;Connection String&lt;/h3&gt;
+
+&lt;p&gt;The &lt;a href=&#34;http://docs.mongodb.org/manual/reference/connection-string/&#34;&gt;connection string&lt;/a&gt; is the simplest way to connect to one or more
+MongoDB servers. A connection string mostly follows &lt;a href=&#34;http://tools.ietf.org/html/rfc3986&#34;&gt;RFC 3986&lt;/a&gt; with the exception of the domain name.
+ For MongoDB, it is possible to list multiple domain names separated by a comma. Below are some example connection strings.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;For a standalone mongod, mongos, or a direct connection to a member of a replica set:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mongodb://host:27017
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To connect to multiple mongos or a replica set:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mongodb://host1:27017,host2:27017
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The &lt;a href=&#34;/mongo-java-driver/3.0/mongo-java-driver/3.0/reference/authenticating/&#34;&gt;authentication guide&lt;/a&gt; contains information on how to provide credentials.&lt;/p&gt;
+
+&lt;h4 id=&#34;the-database-component:d67a243cdf521fafcb45cf3f560d3e12&#34;&gt;The Database Component&lt;/h4&gt;
+
+&lt;p&gt;The database component is optional and is used to indicate which database to authenticate against. When the database component is not
+provided, the &amp;ldquo;admin&amp;rdquo; database is used.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mongodb://host:27017/mydb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Above, the database by the name of &amp;ldquo;mydb&amp;rdquo; is where the credentials are stored for the application.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Note that some drivers utilize the database component to indicate which database to work with by default. The Java driver, while it
+parses the database component, does not use the database component for anything other than authentication.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;options:d67a243cdf521fafcb45cf3f560d3e12&#34;&gt;Options&lt;/h4&gt;
+
+&lt;p&gt;Many options can be provided via the connection string. The ones that cannot may be provided in a &lt;code&gt;MongoClientOptions&lt;/code&gt; instance. To
+provide an option, append a &lt;code&gt;?&lt;/code&gt; to the connection string and separate options by an &lt;code&gt;&amp;amp;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mongodb://host:27017/?replicaSet=rs0&amp;amp;maxPoolSize=200
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The above connection string sets the &amp;ldquo;replicaSet&amp;rdquo; value to &amp;ldquo;rs0&amp;rdquo; and the &amp;ldquo;maxPoolSize&amp;rdquo; to &amp;ldquo;200&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;For a comprehensive list of the available options, see the &lt;a href=&#34;http://api.mongodb.org/java/3.0/com/mongodb/MongoClientURI.html&#34;&gt;MongoClientURI&lt;/a&gt;
+documentation.&lt;/p&gt;
+
+&lt;h3 id=&#34;mongoclient:d67a243cdf521fafcb45cf3f560d3e12&#34;&gt;MongoClient&lt;/h3&gt;
+
+&lt;p&gt;A &lt;code&gt;MongoClient&lt;/code&gt; instance will be the root object for all interaction with MongoDB. It is all that is needed to handle connecting to
+servers, monitoring servers, and performing operations against those servers. Without any arguments, constructing a &lt;code&gt;MongoClient&lt;/code&gt;
+instance will connect to &amp;ldquo;localhost&amp;rdquo; port 27017.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;MongoClient client = new MongoClient();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Alternatively, a connection string may be provided:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;MongoClient client = new MongoClient(new MongoClientURI(&amp;quot;mongodb://host:27017,host2:27017/?replicaSet=rs0&amp;quot;));
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Finally, the &lt;code&gt;MongoClientOptions&lt;/code&gt; class provides an in-code way to set the same options from a connection string.  This is sometimes
+necessary, as the connection string does not allow an application to configure as many configuration options as &lt;code&gt;MongoClientOptions&lt;/code&gt;.&lt;br /&gt;
+&lt;code&gt;MongoClientOptions&lt;/code&gt; instances are immutable, so to create one your application uses a builder:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;MongoClientOptions options = MongoClientOptions.builder().cursorFinalizerEnabled(false).build();
+MongoClient client = new MongoClient(options);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It&amp;rsquo;s also possible to combine &lt;code&gt;MongoClientOptions&lt;/code&gt; with &lt;code&gt;MongoClientURI&lt;/code&gt;, for situations where your application needs to set some options
+in code but others via the connection string:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;
+MongoClientURI uri = new MongoClientURI(&amp;quot;mongodb://host:27017,host2:27017/?replicaSet=rs0&amp;quot;, 
+                                        MongoClientOptions.builder().cursorFinalizerEnabled(false))
+MongoClient client = new MongoClient(uri);
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Monitoring</title>
+      <link>/mongo-java-driver/3.0/reference/monitoring/</link>
+      <pubDate>Thu, 19 Mar 2015 12:53:26 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/monitoring/</guid>
+      <description>
+
+&lt;h1 id=&#34;monitoring:cc05611fd873a7cd9f74d7c5b2563b10&#34;&gt;Monitoring&lt;/h1&gt;
+
+&lt;p&gt;The driver uses &lt;a href=&#34;http://docs.oracle.com/javase/8/docs/technotes/guides/jmx/&#34;&gt;JMX&lt;/a&gt; to create
+&lt;a href=&#34;http://docs.oracle.com/javase/tutorial/jmx/mbeans/mxbeans.html&#34;&gt;MXBeans&lt;/a&gt; that allow an
+application or end user to monitor various aspects of the driver.&lt;/p&gt;
+
+&lt;p&gt;The driver creates MXBean instances of a single type:
+&lt;a href=&#34;http://api.mongodb.org/java/3.0/com/mongodb/management/ConnectionPoolStatisticsMBean.html&#34;&gt;ConnectionPoolStatisticsMBean&lt;/a&gt;.  The driver
+registers one instance of this MXBean interface per server that it is connected to.  So in the case of a replica set, for example, there
+will be an instance per non-hidden member of the replica set.&lt;/p&gt;
+
+&lt;p&gt;Each MXBean instance is required to be registered with a unique object name. All MBean instances created by the driver are under the
+domain &lt;code&gt;org.mongodb.driver&lt;/code&gt;.  Instances of &lt;code&gt;ConnectionPoolStatisticsMBean&lt;/code&gt; will have the properties:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;clusterId&lt;/code&gt;: a client-generated unique identifier that is required for to ensure object name uniqueness in situations where an
+application has mulitiple &lt;code&gt;MongoClient&lt;/code&gt; instances connection to the same MongoDB server deployment&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;host&lt;/code&gt;: the host name of the server.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;port&lt;/code&gt;: the port the server is listening on&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>SSL</title>
+      <link>/mongo-java-driver/3.0/reference/ssl/</link>
+      <pubDate>Thu, 19 Mar 2015 12:53:26 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/ssl/</guid>
+      <description>
+
+&lt;h1 id=&#34;ssl:3c79738ba42290c5c30beda88b41710e&#34;&gt;SSL&lt;/h1&gt;
+
+&lt;p&gt;The Java driver supports SSL connections to MongoDB servers using the underlying support for SSL provided by the JDK. You can configure
+the driver to use SSL either with &lt;code&gt;MongoClientURI&lt;/code&gt; or with &lt;code&gt;MongoClientOptions&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;With &lt;code&gt;MongoClientURI&lt;/code&gt;, specify `ssl=true as a query parameter, as in:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    new MongoClientURI(&amp;quot;mongodb://localhost/?ssl=true&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With &lt;code&gt;MongoClientOptions&lt;/code&gt;, set the sslEnabled property to true, as in:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    MongoClientOptions.builder().sslEnabled(true).build()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;host-name-verification:3c79738ba42290c5c30beda88b41710e&#34;&gt;Host name verification&lt;/h2&gt;
+
+&lt;p&gt;By default, the driver ensures that the host name included in the server&amp;rsquo;s SSL certificate(s) matches the host name(s) provided when
+constructing a &lt;code&gt;MongoClient&lt;/code&gt;.  However, this host name verification requires a Java 7 JVM, as it relies on additions to the
+&lt;code&gt;javax.net.SSLParameters&lt;/code&gt; class that were introduced in Java 7.  If your application must run on Java 6, or for some other reason you need
+ to disable host name verification, you must expicitly indicate this in &lt;code&gt;MongoClientOptions&lt;/code&gt; using the &lt;code&gt;sslInvalidHostNameAllowed&lt;/code&gt; property:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    MongoClientOptions.builder().sslEnabled(true).sslInvalidHostNameAllowed(true).build()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;jvm-system-properties:3c79738ba42290c5c30beda88b41710e&#34;&gt;JVM system properties&lt;/h2&gt;
+
+&lt;p&gt;A typical application will need to set several JVM system properties to ensure that the client is able to validate the SSL certificate
+presented by the server:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;javax.net.ssl.trustStore&lt;/code&gt;: the path to a trust store containing the certificate of the signing authority&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;javax.net.ssl.trustStorePassword&lt;/code&gt;: the password to access this trust store&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The trust store is typically created with the &lt;a href=&#34;http://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html&#34;&gt;keytool&lt;/a&gt;
+command line program provided as part of the JDK.  For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;    keytool -importcert -trustcacerts -file &amp;lt;path to certificate authority file&amp;gt; 
+        -keystore &amp;lt;path to trust store&amp;gt; -storepass &amp;lt;password&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A typical application will also need to set several JVM system properties to ensure that the client presents an SSL certificate to the
+MongoDB server:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;javax.net.ssl.keyStore&lt;/code&gt;: the path to a key store containing the client&amp;rsquo;s SSL certificates&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;javax.net.ssl.keyStorePassword&lt;/code&gt;: the password to access this key store&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The key store is typically created with &lt;a href=&#34;http://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html&#34;&gt;keytool&lt;/a&gt; or with the
+&lt;a href=&#34;https://www.openssl.org/docs/apps/openssl.html&#34;&gt;openssl&lt;/a&gt; command line program.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Logging</title>
+      <link>/mongo-java-driver/3.0/reference/logging/</link>
+      <pubDate>Wed, 18 Mar 2015 21:14:20 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/logging/</guid>
+      <description>
+
+&lt;h1 id=&#34;logging:3f3af53408cff75953b33723c0b061bb&#34;&gt;Logging&lt;/h1&gt;
+
+&lt;p&gt;By default logging is enabled via the popular &lt;a href=&#34;http://www.slf4j.org/&#34;&gt;SLF4J&lt;/a&gt; API.  But it&amp;rsquo;s optional: if the driver detects the presence of
+SLF4J on the classpath it will use it. Otherwise, it will fall back to JUL (&lt;code&gt;java.util.logging&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;The driver uses the following logger names:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;org.mongodb.driver&lt;/code&gt;: the root logger
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;cluster&lt;/code&gt;: for logs related to monitoring of the MongoDB servers to which the driver connects&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;connection&lt;/code&gt;: for logs related to connections and connection pools&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;protocol&lt;/code&gt;: for logs related to protocol message sent to and received from a MongoDB server
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;insert&lt;/code&gt;: for logs related to insert messages and responses&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;update&lt;/code&gt;: for logs related to update messages and responses&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;delete&lt;/code&gt;: for logs related to delete messages and responses&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;query&lt;/code&gt;: for logs related to query messages and responses&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;getmore&lt;/code&gt;: for logs related to getmore messages and responses&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;killcursor&lt;/code&gt;: for logs related to killcursor messages and responses&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;command&lt;/code&gt;: for logs related to command messages and responses&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;uri&lt;/code&gt;: for logs related to connection string parsing&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;management&lt;/code&gt;: for logs related to JMX&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Reference</title>
+      <link>/mongo-java-driver/3.0/reference/</link>
+      <pubDate>Tue, 17 Mar 2015 15:36:56 +0000</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/</guid>
+      <description>
+
+&lt;h2 id=&#34;mongodb-java-driver-reference-documentation:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;MongoDB Java Driver Reference Documentation&lt;/h2&gt;
+
+&lt;p&gt;This is the reference documentation.  Not sure what to say yet at the top level.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="keyword" content="">
+
+    <link rel="shortcut icon" href="/mongo-java-driver/3.0/img/favicon.png">
+
+    <title>CRUD Operations</title>
+
+    <link rel="stylesheet" href="/mongo-java-driver/3.0/css/bootstrap-custom.css" type="text/css" />
+<link rel="stylesheet" href="/mongo-java-driver/3.0/lib/font-awesome/css/font-awesome.min.css" type="text/css" />
+<link rel="stylesheet" href="/mongo-java-driver/3.0/lib/tipsy.css" type="text/css" />
+<link rel="stylesheet" href="/mongo-java-driver/3.0/css/mongodb-docs.css" type="text/css" />
+<link rel="stylesheet" href="/mongo-java-driver/3.0/css/overrides.css" type="text/css" />
+<link rel="stylesheet" href="/mongo-java-driver/3.0/lib/highlight/styles/idea.css" />
+
+  </head>
+
+  <body>
+  
+  <section id="container" class="">
+      
+      <header id="header-db" class="row" role="navigation">
+  <div class="header-content">
+    <div class="toggle-nav pull-left">
+        <i class="fa fa-bars"></i>
+        <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"></div>
+    </div>
+    
+    <div class="logo pull-left">
+      <a href="/mongo-java-driver/3.0">
+        <img src="/mongo-java-driver/3.0/img/logo-mongodb-header.png", alt="MongoDB.org" />
+      </a>
+    </div>
+    
+    <div>
+<div class="nav-items pull-right">
+  <a href="http://try.mongodb.org/">Try it Out</a>
+  <a href="http://www.mongodb.org/downloads">Downloads</a>
+  <a href="http://www.mongodb.org/get-involved">Community</a>
+  <a href="http://blog.mongodb.org">Blog</a>
+</div>
+</div>
+
+  </div>
+</header>
+
+      
+
+      
+<aside id="sidebar" class="sidebar">
+    <div class="ssidebar nav-collapse">
+      <div class="ssidebarwrapper">
+        <h3>
+          <a class="index-link" href="/mongo-java-driver/3.0">MongoDB Java Driver</a>
+          <a class="version pull-right" href="">3.0</a>
+        </h3>
+
+        
+        <ul class="sidebar-menu">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+
+          
+          
+            
+            
+
+
+
+
+
+
+
+
+
+  
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+  
+
+
+      
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+    
+    
+    
+  
+  
+
+
+      
+    
+      
+      
+    
+  
+
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+  
+    
+      
+      
+    
+  
+
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+  
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+  
+
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+  
+
+
+          
+
+          
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1  current">
+  <a href="/mongo-java-driver/3.0/tutorial/" class="">
+      <i class='fa fa-road'></i>
+      <span>Getting Started</span>
+      <span class="menu-arrow fa fa-angle-down"></span>
+  </a>
+    <ul  class="current">
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/tutorial/installation-guide/">
+        <i class='fa'></i>
+        Installation Guide
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/tutorial/crud-operations/">
+        <i class='fa'></i>
+        CRUD Operations
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/tutorial/admin-operations/">
+        <i class='fa'></i>
+        Admin Operations
+    </a>
+  </li>
+
+
+        
+        
+    </ul>
+  </li>
+
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1 ">
+  <a href="/mongo-java-driver/3.0/whats-new/" class="">
+      <i class='fa fa-cog'></i>
+      <span>What&#39;s New</span>
+      <span class="menu-arrow fa fa-angle-right"></span>
+  </a>
+    <ul >
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/whats-new/upgrading/">
+        <i class='fa fa-wrench'></i>
+        Upgrading to 3.0
+    </a>
+  </li>
+
+
+        
+        
+    </ul>
+  </li>
+
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1 ">
+  <a href="/mongo-java-driver/3.0/reference/" class="">
+      <i class='fa fa-book'></i>
+      <span>Reference</span>
+      <span class="menu-arrow fa fa-angle-right"></span>
+  </a>
+    <ul >
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/reference/system-requirements/">
+        <i class='fa'></i>
+        System Requirements
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/reference/connecting/">
+        <i class='fa'></i>
+        Connecting
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/reference/ssl/">
+        <i class='fa'></i>
+        SSL
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/reference/authenticating/">
+        <i class='fa'></i>
+        Authenticating
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/reference/logging/">
+        <i class='fa'></i>
+        Logging
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/reference/monitoring/">
+        <i class='fa'></i>
+        Monitoring
+    </a>
+  </li>
+
+
+        
+        
+    </ul>
+  </li>
+
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l1">
+    <a href="/mongo-java-driver/3.0/issues-help/">
+        <i class='fa fa-life-ring'></i>
+        Issues &amp; Help
+    </a>
+  </li>
+
+
+          
+        </ul>
+        
+    </div>
+  </div>
+  
+</aside>
+
+
+
+
+
+
+      
+      <section id="main-content" class="content">
+          <section class="main-column pull-left">
+            <div class="document">
+              <div class="documentwrapper">
+                <div class="bodywrapper">
+                  <div class="body">
+
+
+  
+<a class="edit-link" href="https://github.com/mongodb/mongo-java-driver/docs/content/tutorial/crud-operations.md" target="_blank" title="Edit tutorial/crud-operations.md on GitHub"><i class="fa fa-pencil-square-o"></i></a>
+
+
+
+
+
+
+
+
+
+
+<div class="bc">
+<ul>
+  
+  
+  
+  
+  
+  <li><a href="/mongo-java-driver/3.0/tutorial/">Getting Started</a> <i class="fa fa-angle-right"></i></li>
+  <li>CRUD Operations</li>
+</ul>
+</div>
+
+
+
+
+<h1 id="getting-started:a1754d8aebaeeb3756b317ef6b864847">Getting Started</h1>
+
+<h2 id="introduction:a1754d8aebaeeb3756b317ef6b864847">Introduction</h2>
+
+<p>This page is a brief overview of working with the 3.0 MongoDB Java
+Driver.</p>
+
+<p>For more information about the Java API, please refer to the <a href="http://api.mongodb.org/java/3.0/index.html">online API
+Documentation for 3.0 Java Driver</a>.</p>
+
+<h1 id="a-quick-tour:a1754d8aebaeeb3756b317ef6b864847">A Quick Tour</h1>
+
+<p>See the <a href="https://github.com/mongodb/mongo-java-driver/tree/master#binaries">Binaries section of the
+README</a>
+for instructions on how to include the driver in your project.</p>
+
+<blockquote>
+<p><strong>Note:</strong></p>
+
+<p>The following code snippets come from the QuickTour.java example code
+that can be found with the <a href="https://github.com/mongodb/mongo-java-driver/blob/3.0.x/driver/src/examples/tour/QuickTour.java">driver
+source</a>.</p>
+</blockquote>
+
+<h3 id="making-a-connection:a1754d8aebaeeb3756b317ef6b864847">Making a Connection</h3>
+
+<p>To make a connection to a MongoDB, you need to have at the minimum, the
+name of a database to connect to. The database doesn&rsquo;t have to exist -if
+it doesn&rsquo;t, MongoDB will create it for you.</p>
+
+<p>Additionally, you can specify the server address and port when
+connecting. The following example shows three ways to connect to the
+database <code>mydb</code> on the local machine :</p>
+
+<pre><code class="language-java">// To directly connect to a single MongoDB server (note that this will not auto-discover the primary even
+// if it's a member of a replica set:
+MongoClient mongoClient = new MongoClient();
+// or
+MongoClient mongoClient = new MongoClient( &quot;localhost&quot; );
+// or
+MongoClient mongoClient = new MongoClient( &quot;localhost&quot; , 27017 );
+// or, to connect to a replica set, with auto-discovery of the primary, supply a seed list of members
+MongoClient mongoClient = new MongoClient(Arrays.asList(new ServerAddress(&quot;localhost&quot;, 27017),
+                                      new ServerAddress(&quot;localhost&quot;, 27018),
+                                      new ServerAddress(&quot;localhost&quot;, 27019)));
+// or use a connection string
+MongoClient mongoClient = new MongoClient(new MongoClientURI(&quot;mongodb://localhost:27017,localhost:27018,localhost:27019&quot;));
+
+MongoDatabase database = mongoClient.getDatabase(&quot;mydb&quot;);
+</code></pre>
+
+<p>At this point, the <code>database</code> object will be a connection to a MongoDB
+server for the specified database. With it, you can do further
+operations.</p>
+
+<blockquote>
+<p><strong>Note:</strong></p>
+
+<p>The <code>MongoClient</code> instance actually represents a pool of connections
+to the database; you will only need one instance of class
+<code>MongoClient</code> even with multiple threads. See the
+concurrency &lt;java-driver-concurrency&gt; doc page for more information.</p>
+</blockquote>
+
+<p>The <code>MongoClient</code> class is designed to be thread safe and shared among
+threads. Typically you create only 1 instance for a given database
+cluster and use it across your application. If for some reason you
+decide to create many <code>MongoClient</code> instances, note that:</p>
+
+<ul>
+<li>all resource usage limits (max connections, etc) apply per
+<code>MongoClient</code> instance</li>
+<li>to dispose of an instance, make sure you call <code>MongoClient.close()</code>
+to clean up resources</li>
+</ul>
+
+<h3 id="getting-a-collection:a1754d8aebaeeb3756b317ef6b864847">Getting a Collection</h3>
+
+<p>To get a collection to use, just specify the name of the collection to
+the <a href="http://api.mongodb.org/java/3.0/com/mongodb/client/MongoDatabase.html#getCollection-java.lang.String-">getCollection(String
+collectionName)</a>
+method:</p>
+
+<pre><code class="language-java">MongoCollection&lt;Document&gt; collection = database.getCollection(&quot;test&quot;);
+</code></pre>
+
+<p>Once you have this collection object, you can now do things like insert
+data, query for data, etc.</p>
+
+<h3 id="inserting-a-document:a1754d8aebaeeb3756b317ef6b864847">Inserting a Document</h3>
+
+<p>Once you have the collection object, you can insert documents into the
+collection. For example, lets make a little document that in JSON would
+be represented as</p>
+
+<pre><code class="language-sourceCode javascript">{
+   &quot;name&quot; : &quot;MongoDB&quot;,
+   &quot;type&quot; : &quot;database&quot;,
+   &quot;count&quot; : 1,
+   &quot;info&quot; : {
+               x : 203,
+               y : 102
+             }
+}
+</code></pre>
+
+<p>Notice that the above has an &ldquo;inner&rdquo; document embedded within it. To do
+this, we can use the
+<a href="http://api.mongodb.org/java/3.0/org/bson/Document.html">Document</a> class
+to create the document (including the inner document), and then just
+simply insert it into the collection using the <code>insertOne()</code> method.</p>
+
+<pre><code class="language-java">Document doc = new Document(&quot;name&quot;, &quot;MongoDB&quot;)
+               .append(&quot;type&quot;, &quot;database&quot;)
+               .append(&quot;count&quot;, 1)
+               .append(&quot;info&quot;, new Document(&quot;x&quot;, 203).append(&quot;y&quot;, 102));
+collection.insertOne(doc);
+</code></pre>
+
+<h3 id="finding-the-first-document-in-a-collection-using-find:a1754d8aebaeeb3756b317ef6b864847">Finding the First Document in a Collection Using <code>find()</code></h3>
+
+<p>To show that the document we inserted in the previous step is there, we
+can do a simple
+<a href="http://api.mongodb.org/java/3.0/com/mongodb/client/MongoCollection.html#find--">find()</a>
+operation followed by a call to
+<a href="http://api.mongodb.org/java/3.0/com/mongodb/client/MongoIterable.html#first--">first()</a>
+to get the first document in the collection. This method returns a
+single document, and it&rsquo;s useful for queries which should only match a
+single document, or you are only interested in the first. You don&rsquo;t have
+to deal with the cursor.</p>
+
+<pre><code class="language-java">Document myDoc = collection.find().first();
+System.out.println(myDoc);
+</code></pre>
+
+<p>and you should see</p>
+
+<pre><code class="language-java">Document{{_id=54b5594843bb7b25f1c9da72, name=MongoDB, type=database, count=1, info=Document{{x=203, y=102}}}}
+</code></pre>
+
+<blockquote>
+<p><strong>Note:</strong></p>
+
+<p>The <code>_id</code> element has been added automatically by MongoDB to your
+document. Remember, MongoDB reserves element names that start with
+&ldquo;_&rdquo; and &ldquo;\$&rdquo; for internal use.</p>
+</blockquote>
+
+<h3 id="adding-multiple-documents:a1754d8aebaeeb3756b317ef6b864847">Adding Multiple Documents</h3>
+
+<p>In order to do more interesting things with queries, let&rsquo;s add multiple
+simple documents to the collection. These documents will just be</p>
+
+<pre><code class="language-javascript">{
+   &quot;i&quot; : value
+}
+</code></pre>
+
+<p>and we can do this fairly efficiently in a loop</p>
+
+<pre><code class="language-java">List&lt;Document&gt; documents = new ArrayList&lt;Document&gt;();
+for (int i = 0; i &lt; 100; i++) {
+    documents.add(new Document(&quot;i&quot;, i));
+}
+collection.insertMany(documents);
+</code></pre>
+
+<h3 id="counting-documents-in-a-collection:a1754d8aebaeeb3756b317ef6b864847">Counting Documents in A Collection</h3>
+
+<p>Now that we&rsquo;ve inserted 101 documents (the 100 we did in the loop, plus
+the first one), we can check to see if we have them all using the
+<a href="http://api.mongodb.org/java/3.0/com/mongodb/client/MongoCollection.html#count--">count()</a>
+method.</p>
+
+<pre><code class="language-java">System.out.println(collection.count());
+</code></pre>
+
+<p>and it should print <code>101</code>.</p>
+
+<h3 id="using-a-cursor-to-get-all-the-documents:a1754d8aebaeeb3756b317ef6b864847">Using a Cursor to Get All the Documents</h3>
+
+<p>In order to get all the documents in the collection, we will use the
+<code>find()</code> method. The <code>find()</code> method returns a <code>MongoIterable</code> instance
+which allows us to iterate over the set of documents that matched our
+query. So to query all of the documents and print them out :</p>
+
+<pre><code class="language-java">MongoCursor&lt;Document&gt; cursor = collection.find().iterator();
+try {
+    while (cursor.hasNext()) {
+        System.out.println(cursor.next());
+    }
+} finally {
+    cursor.close();
+}
+</code></pre>
+
+<p>and that should print all 101 documents in the collection.</p>
+
+<p>Note that while this idiom is permissible:</p>
+
+<pre><code class="language-java">for (Document cur : collection.find()) {
+    System.out.println(cur);
+}
+</code></pre>
+
+<p>its use is discouraged as the application can leak a cursor if the loop
+terminates early.</p>
+
+<h3 id="getting-a-single-document-with-a-query-filter:a1754d8aebaeeb3756b317ef6b864847">Getting A Single Document with A Query Filter</h3>
+
+<p>We can create a filter to pass to the find() method to get a subset of
+the documents in our collection. For example, if we wanted to find the
+document for which the value of the &ldquo;i&rdquo; field is 71, we would do the
+following ;</p>
+
+<pre><code class="language-java">myDoc = collection.find(eq(&quot;i&quot;, 71)).first();
+System.out.println(myDoc);
+</code></pre>
+
+<p>and it should just print just one document</p>
+
+<pre><code class="language-javascript">Document{{_id=54b5629643bb7b2a52e19ea3, i=71}}
+</code></pre>
+
+<p>Note that this usage relies on a static import of the Filters.eq method:</p>
+
+<pre><code class="language-java">import static com.mongodb.client.model.Filters.*;
+</code></pre>
+
+<h3 id="getting-a-set-of-documents-with-a-query:a1754d8aebaeeb3756b317ef6b864847">Getting A Set of Documents With a Query</h3>
+
+<p>We can use the query to get a set of documents from our collection. For
+example, if we wanted to get all documents where <code>&quot;i&quot; &gt; 50</code>, we could
+write:</p>
+
+<pre><code class="language-java">// now use a range query to get a larger subset
+cursor = collection.find(gt(&quot;i&quot;, 50)).iterator();
+
+try {
+    while (cursor.hasNext()) {
+        System.out.println(cursor.next());
+    }
+} finally {
+    cursor.close();
+}
+</code></pre>
+
+<p>which should print the documents where <code>i &gt; 50</code>.</p>
+
+<p>We could also get a range, say <code>50 &lt; i &lt;= 100</code>:</p>
+
+<pre><code class="language-java">cursor = collection.find(and(gt(&quot;i&quot;, 50), lte(&quot;i&quot;, 100))).iterator();
+
+try {
+    while (cursor.hasNext()) {
+        System.out.println(cursor.next());
+    }
+} finally {
+    cursor.close();
+}
+</code></pre>
+
+<h3 id="maxtime:a1754d8aebaeeb3756b317ef6b864847">MaxTime</h3>
+
+<p>MongoDB 2.6 introduced the ability to timeout individual queries:</p>
+
+<pre><code class="language-java">collection.find().maxTime(1, TimeUnit.SECONDS).first();
+</code></pre>
+
+<p>In the example above the maxTime is set to one second and the query will
+be aborted after the full second is up.</p>
+
+<h3 id="bulk-operations:a1754d8aebaeeb3756b317ef6b864847">Bulk operations</h3>
+
+<p>Under the covers MongoDB is moving away from the combination of a write
+operation followed by get last error (GLE) and towards a write commands
+API. These new commands allow for the execution of bulk
+insert/update/delete operations. There are two types of bulk operations:</p>
+
+<ol>
+<li><p>Ordered bulk operations.</p>
+
+<p>:   Executes all the operation in order and error out on the first
+    write error.</p></li>
+
+<li><p>Unordered bulk operations.</p>
+
+<p>:   These operations execute all the operations in parallel and
+    aggregates up all the errors. Unordered bulk operations do not
+    guarantee order of execution.</p></li>
+</ol>
+
+<p>Let&rsquo;s look at two simple examples using ordered and unordered
+operations:</p>
+
+<pre><code class="language-java">// 2. Ordered bulk operation - order is guarenteed
+collection.bulkWrite(Arrays.asList(new InsertOneModel&lt;&gt;(new Document(&quot;_id&quot;, 4)),
+                                   new InsertOneModel&lt;&gt;(new Document(&quot;_id&quot;, 5)),
+                                   new InsertOneModel&lt;&gt;(new Document(&quot;_id&quot;, 6)),
+                                   new UpdateOneModel&lt;&gt;(new Document(&quot;_id&quot;, 1),
+                                                        new Document(&quot;$set&quot;, new Document(&quot;x&quot;, 2))),
+                                   new DeleteOneModel&lt;&gt;(new Document(&quot;_id&quot;, 2)),
+                                   new ReplaceOneModel&lt;&gt;(new Document(&quot;_id&quot;, 3),
+                                                         new Document(&quot;_id&quot;, 3).append(&quot;x&quot;, 4))));
+
+
+ // 2. Unordered bulk operation - no guarantee of order of operation
+collection.bulkWrite(Arrays.asList(new InsertOneModel&lt;&gt;(new Document(&quot;_id&quot;, 4)),
+                                   new InsertOneModel&lt;&gt;(new Document(&quot;_id&quot;, 5)),
+                                   new InsertOneModel&lt;&gt;(new Document(&quot;_id&quot;, 6)),
+                                   new UpdateOneModel&lt;&gt;(new Document(&quot;_id&quot;, 1),
+                                                        new Document(&quot;$set&quot;, new Document(&quot;x&quot;, 2))),
+                                   new DeleteOneModel&lt;&gt;(new Document(&quot;_id&quot;, 2)),
+                                   new ReplaceOneModel&lt;&gt;(new Document(&quot;_id&quot;, 3),
+                                                         new Document(&quot;_id&quot;, 3).append(&quot;x&quot;, 4)))),
+                     new BulkWriteOptions().ordered(false));
+</code></pre>
+
+<blockquote>
+<p><strong>Note:</strong></p>
+
+<p>For servers older than 2.6 the API will down convert the operations,
+and support the correct semantics for BulkWriteResult and
+BulkWriteException each write operation has to be done one at a time.
+It&rsquo;s not possible to down convert 100% so there might be slight edge
+cases where it cannot correctly report the right numbers.</p>
+</blockquote>
+
+<h2 id="quick-tour-of-the-administrative-functions:a1754d8aebaeeb3756b317ef6b864847">Quick Tour of the Administrative Functions</h2>
+
+<h3 id="getting-a-list-of-databases:a1754d8aebaeeb3756b317ef6b864847">Getting A List of Databases</h3>
+
+<p>You can get a list of the available databases:</p>
+
+<pre><code class="language-java">for (String name: mongoClient.listDatabaseNames()) {
+    System.out.println(name);
+}
+</code></pre>
+
+<p>Calling the <code>getDatabase()</code> on <code>MongoClient</code> does not create a database.
+Only when a database is written to will a database be created. Examples
+would be creating an index or collection or inserting a document into a
+collection.</p>
+
+<h3 id="dropping-a-database:a1754d8aebaeeb3756b317ef6b864847">Dropping A Database</h3>
+
+<p>You can drop a database by name using a <code>MongoClient</code> instance:</p>
+
+<pre><code class="language-java">mongoClient.dropDatabase(&quot;databaseToBeDropped&quot;);
+</code></pre>
+
+<h3 id="creating-a-collection:a1754d8aebaeeb3756b317ef6b864847">Creating A Collection</h3>
+
+<p>There are two ways to create a collection. Inserting a document will
+create the collection if it doesn&rsquo;t exist or calling the
+<a href="http://docs.mongodb.org/manual/reference/method/db.createCollection">createCollection</a>
+command.</p>
+
+<p>An example of creating a capped collection_ sized to 1 megabyte:</p>
+
+<pre><code class="language-java">database.createCollection(&quot;cappedCollection&quot;, new CreateCollectionOptions().capped(true).sizeInBytes(0x100000));
+</code></pre>
+
+<h3 id="getting-a-list-of-collections:a1754d8aebaeeb3756b317ef6b864847">Getting A List of Collections</h3>
+
+<p>You can get a list of the available collections in a database:</p>
+
+<pre><code class="language-java">for (String name : database.listCollectionNames()) {
+    System.out.println(name);
+}
+</code></pre>
+
+<h3 id="dropping-a-collection:a1754d8aebaeeb3756b317ef6b864847">Dropping A Collection</h3>
+
+<p>You can drop a collection by using the drop() method:</p>
+
+<pre><code class="language-java">collection.dropCollection();
+</code></pre>
+
+<p>And you should notice that the collection no longer exists.</p>
+
+<h3 id="creating-an-index:a1754d8aebaeeb3756b317ef6b864847">Creating An Index</h3>
+
+<p>MongoDB supports indexes, and they are very easy to add on a collection.
+To create an index, you just specify the field that should be indexed,
+and specify if you want the index to be ascending (<code>1</code>) or descending
+(<code>-1</code>). The following creates an ascending index on the <code>i</code> field :</p>
+
+<pre><code class="language-java">// create an ascending index on the &quot;i&quot; field
+ collection.createIndex(new Document(&quot;i&quot;, 1));
+</code></pre>
+
+<h3 id="getting-a-list-of-indexes-on-a-collection:a1754d8aebaeeb3756b317ef6b864847">Getting a List of Indexes on a Collection</h3>
+
+<p>You can get a list of the indexes on a collection:</p>
+
+<pre><code class="language-java">for (final Document index : collection.listIndexes()) {
+    System.out.println(index);
+}
+</code></pre>
+
+<p>and you should see something like</p>
+
+<pre><code class="language-javascript">Document{{v=1, key=Document{{_id=1}}, name=_id_, ns=mydb.test}}
+Document{{v=1, key=Document{{i=1}}, name=i_1, ns=mydb.test}}
+</code></pre>
+
+<h3 id="text-indexes:a1754d8aebaeeb3756b317ef6b864847">Text indexes</h3>
+
+<p>MongoDB also provides text indexes to support text search of string
+content. Text indexes can include any field whose value is a string or
+an array of string elements. To create a text index specify the string
+literal &ldquo;text&rdquo; in the index document:</p>
+
+<pre><code class="language-java">// create a text index on the &quot;content&quot; field
+coll.createIndex(new BasicDBObject(&quot;content&quot;, &quot;text&quot;));
+</code></pre>
+
+<p>As of MongoDB 2.6 text indexes are now integrated into the main query
+language and enabled by default:</p>
+
+<pre><code class="language-java">// Insert some documents
+collection.insertOne(new Document(&quot;_id&quot;, 0).append(&quot;content&quot;, &quot;textual content&quot;));
+collection.insertOne(new Document(&quot;_id&quot;, 1).append(&quot;content&quot;, &quot;additional content&quot;));
+collection.insertOne(new Document(&quot;_id&quot;, 2).append(&quot;content&quot;, &quot;irrelevant content&quot;));
+
+// Find using the text index
+Document search = new Document(&quot;$search&quot;, &quot;textual content -irrelevant&quot;);
+Document textSearch = new Document(&quot;$text&quot;, search);
+long matchCount = collection.count(textSearch);
+System.out.println(&quot;Text search matches: &quot;+ matchCount);
+
+// Find using the $language operator
+textSearch = new Document(&quot;$text&quot;, search.append(&quot;$language&quot;, &quot;english&quot;));
+matchCount = collection.count(textSearch);
+System.out.println(&quot;Text search matches (english): &quot;+ matchCount);
+
+// Find the highest scoring match
+Document projection = new Document(&quot;score&quot;, new Document(&quot;$meta&quot;, &quot;textScore&quot;));
+myDoc = collection.find(textSearch).projection(projection).first();
+System.out.println(&quot;Highest scoring document: &quot;+ myDoc);
+</code></pre>
+
+<p>and it should print:</p>
+
+<pre><code class="language-javascript">Text search matches: 2
+Text search matches (english): 2
+Highest scoring document: Document{{_id=1, content=additional content, score=0.75}}
+</code></pre>
+
+<p>For more information about text search see the
+text index &lt;/core/index-text&gt; and
+\$text query operator &lt;/reference/operator/query/text&gt; documentation.</p>
+
+</div>
+<div class="right-column">
+<div class="wrapper">
+  
+  <div class="toc">
+    <span class="toc-header">On this page</span>
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#getting-started:a1754d8aebaeeb3756b317ef6b864847">Getting Started</a>
+<ul>
+<li><a href="#introduction:a1754d8aebaeeb3756b317ef6b864847">Introduction</a></li>
+</ul></li>
+<li><a href="#a-quick-tour:a1754d8aebaeeb3756b317ef6b864847">A Quick Tour</a>
+<ul>
+<li>
+<ul>
+<li><a href="#making-a-connection:a1754d8aebaeeb3756b317ef6b864847">Making a Connection</a></li>
+<li><a href="#getting-a-collection:a1754d8aebaeeb3756b317ef6b864847">Getting a Collection</a></li>
+<li><a href="#inserting-a-document:a1754d8aebaeeb3756b317ef6b864847">Inserting a Document</a></li>
+<li><a href="#finding-the-first-document-in-a-collection-using-find:a1754d8aebaeeb3756b317ef6b864847">Finding the First Document in a Collection Using <code>find()</code></a></li>
+<li><a href="#adding-multiple-documents:a1754d8aebaeeb3756b317ef6b864847">Adding Multiple Documents</a></li>
+<li><a href="#counting-documents-in-a-collection:a1754d8aebaeeb3756b317ef6b864847">Counting Documents in A Collection</a></li>
+<li><a href="#using-a-cursor-to-get-all-the-documents:a1754d8aebaeeb3756b317ef6b864847">Using a Cursor to Get All the Documents</a></li>
+<li><a href="#getting-a-single-document-with-a-query-filter:a1754d8aebaeeb3756b317ef6b864847">Getting A Single Document with A Query Filter</a></li>
+<li><a href="#getting-a-set-of-documents-with-a-query:a1754d8aebaeeb3756b317ef6b864847">Getting A Set of Documents With a Query</a></li>
+<li><a href="#maxtime:a1754d8aebaeeb3756b317ef6b864847">MaxTime</a></li>
+<li><a href="#bulk-operations:a1754d8aebaeeb3756b317ef6b864847">Bulk operations</a></li>
+</ul></li>
+<li><a href="#quick-tour-of-the-administrative-functions:a1754d8aebaeeb3756b317ef6b864847">Quick Tour of the Administrative Functions</a>
+<ul>
+<li><a href="#getting-a-list-of-databases:a1754d8aebaeeb3756b317ef6b864847">Getting A List of Databases</a></li>
+<li><a href="#dropping-a-database:a1754d8aebaeeb3756b317ef6b864847">Dropping A Database</a></li>
+<li><a href="#creating-a-collection:a1754d8aebaeeb3756b317ef6b864847">Creating A Collection</a></li>
+<li><a href="#getting-a-list-of-collections:a1754d8aebaeeb3756b317ef6b864847">Getting A List of Collections</a></li>
+<li><a href="#dropping-a-collection:a1754d8aebaeeb3756b317ef6b864847">Dropping A Collection</a></li>
+<li><a href="#creating-an-index:a1754d8aebaeeb3756b317ef6b864847">Creating An Index</a></li>
+<li><a href="#getting-a-list-of-indexes-on-a-collection:a1754d8aebaeeb3756b317ef6b864847">Getting a List of Indexes on a Collection</a></li>
+<li><a href="#text-indexes:a1754d8aebaeeb3756b317ef6b864847">Text indexes</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+  
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+
+</section>
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+   URL_ROOT:    "/mongo-java-driver/3.0",
+   VERSION:     "",
+   COLLAPSE_INDEX: false,
+   FILE_SUFFIX: '.html',
+   HAS_SOURCE:  true,
+  };
+</script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/js/jquery.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/js/underscore.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/js/doctools.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/lib/bootstrap.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/lib/jquery.tipsy.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/js/navbar.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/lib/highlight/highlight.pack.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/js/scripts.js"></script>
+
+
+
+</body>
+</html>
+
