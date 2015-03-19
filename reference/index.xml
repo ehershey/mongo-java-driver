@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>References on MongoDB Java Driver</title>
+    <link>/mongo-java-driver/3.0/reference/</link>
+    <description>Recent content in References on MongoDB Java Driver</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Mar 2015 14:27:51 -0400</lastBuildDate>
+    <atom:link href="/mongo-java-driver/3.0/reference/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Authenticating</title>
+      <link>/mongo-java-driver/3.0/reference/authenticating/</link>
+      <pubDate>Thu, 19 Mar 2015 14:27:51 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/authenticating/</guid>
+      <description>
+
+&lt;h1 id=&#34;authenticating:7010764a78ee04293fe005f4d2277400&#34;&gt;Authenticating&lt;/h1&gt;
+
+&lt;p&gt;The Java driver supports all MongoDB &lt;a href=&#34;http://docs.mongodb.org/manual/core/authentication/&#34;&gt;authentication mechanisms&lt;/a&gt;, including those
+included only in the &lt;a href=&#34;http://docs.mongodb.org/manual/administration/install-enterprise/&#34;&gt;Enterprise Edition&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Authentication credentials are created by the application as instances of
+&lt;a href=&#34;http://api.mongodb.org/java/current/com/mongodb/MongoCredential.html&#34;&gt;MongoCredential&lt;/a&gt;, which includes static factory methods for each
+of the supported authentication mechanisms.  A list of these instances must be passed to the driver via one of several
+ &lt;a href=&#34;http://api.mongodb.org/java/current/com/mongodb/MongoCredential.html&#34;&gt;MongoClient&lt;/a&gt; constructors that take a
+ parameter of type &lt;code&gt;List&amp;lt;MongoCredential&amp;gt;&lt;/code&gt;.   Note that due to the flexibilty of role-based access control in MongoDB, it is usually
+ sufficient to authenticate with a single user, but for completeness the driver takes a list of credentials is always accepted.&lt;/p&gt;
+
+&lt;h2 id=&#34;default-authentication-mechanism:7010764a78ee04293fe005f4d2277400&#34;&gt;Default authentication mechanism&lt;/h2&gt;
+
+&lt;p&gt;MongoDB 3.0 changed the default authentication mechanism from
+&lt;a href=&#34;http://docs.mongodb.org/manual/core/authentication/#mongodb-cr-authentication&#34;&gt;MONGODB-CR&lt;/a&gt; to
+&lt;a href=&#34;http://docs.mongodb.org/manual/core/authentication/#scram-sha-1-authentication&#34;&gt;SCRAM-SHA-1&lt;/a&gt;.  To create a credential that will
+authenticate properly regardless of server version, create a credential using the following static factory method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import com.mongodb.MongoCredential;
+
+// ...
+
+String user;        // the user name
+String database;    // the name of the database in which the user is defined
+char[] password;    // the password as a character array
+// ...
+MongoCredential credential = MongoCredential.createCredential(user,
+                                                              database,
+                                                              password);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is the recommended approach as it will make upgrading from MongoDB 2.6 to MongoDB 3.0 seamless, even after &lt;a href=&#34;http://docs.mongodb.org/manual/release-notes/3.0-scram/#upgrade-mongodb-cr-to-scram&#34;&gt;upgrading the
+authentication schema&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;scram-sha-1:7010764a78ee04293fe005f4d2277400&#34;&gt;SCRAM-SHA-1&lt;/h2&gt;
+
+&lt;p&gt;To explicitly create a credential of type &lt;a href=&#34;http://docs.mongodb .org/manual/core/authentication/#scram-sha-1-authentication&#34;&gt;SCRAM-SHA-1&lt;/a&gt;
+use the following static factory method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;MongoCredential credential = MongoCredential.createScramSha1Credential(user,
+                                                                       database,
+                                                                       password);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;mongodb-cr:7010764a78ee04293fe005f4d2277400&#34;&gt;MONGODB-CR&lt;/h2&gt;
+
+&lt;p&gt;To explicitly create a credential of type &lt;a href=&#34;http://docs.mongodb.org/manual/core/authentication/#mongodb-cr-authentication&#34;&gt;MONGODB-CR&lt;/a&gt;
+use the following static factory method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;MongoCredential credential = MongoCredential.createMongoCRCredential(user,
+                                                                     database,
+                                                                     password);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that this is not recommended as a credential created in this way will fail to authenticate after an authentication schema upgrade
+from MONGODB-CR to SCRAM-SHA-1.&lt;/p&gt;
+
+&lt;h2 id=&#34;x-509:7010764a78ee04293fe005f4d2277400&#34;&gt;x.509&lt;/h2&gt;
+
+&lt;p&gt;The &lt;a href=&#34;http://docs.mongodb.org/manual/core/authentication/#x-509-certificate-authentication&#34;&gt;x.509&lt;/a&gt; mechanism authenticates a user
+whose name is derived from the distinguished subject name of the X.509 certificate presented by the driver during SSL negotiation. This
+authentication method requires the use of SSL connections with certificate validation and is available in MongoDB 2.6 and newer. To
+create a credential of this type use the following static factory method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;String user;     // The x.509 certificate derived user name
+MongoCredential credential = MongoCredential.createMongoX509Credential(user);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See the MongoDB server
+&lt;a href=&#34;http://docs.mongodb.org/manual/tutorial/configure-x509-client-authentication/#add-x-509-certificate-subject-as-a-user&#34;&gt;x.509 tutorial&lt;/a&gt; for
+more information about determining the subject name from the certificate.&lt;/p&gt;
+
+&lt;h2 id=&#34;kerberos-gssapi:7010764a78ee04293fe005f4d2277400&#34;&gt;Kerberos (GSSAPI)&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.mongodb.com/products/mongodb-enterprise&#34;&gt;MongoDB Enterprise&lt;/a&gt; supports proxy authentication through Kerberos service.  To
+create a credential of type &lt;a href=&#34;http://docs.mongodb.org/manual/core/authentication/#kerberos-authentication&#34;&gt;Kerberos (GSSAPI)&lt;/a&gt; use the
+following static factory method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;String user;   // The Kerberos user name, including the realm, e.g. &amp;quot;user1@MYREALM.ME&amp;quot;
+// ...
+MongoCredential credential = MongoCredential.createGSSAPICredential(user);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that the method refers to the &lt;code&gt;GSSAPI&lt;/code&gt; authentication mechanism instead of &lt;code&gt;Kerberos&lt;/code&gt; because technically the driver is authenticating
+via the &lt;a href=&#34;https://tools.ietf.org/html/rfc4752&#34;&gt;GSSAPI&lt;/a&gt; SASL mechanism.&lt;/p&gt;
+
+&lt;p&gt;To successfully authenticate via Kerberos, the application typically must specify several system properties so that the underlying GSSAPI
+ Java libraries can acquire a Kerberos ticket:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;java.security.krb5.realm=MYREALM.ME
+java.security.krb5.kdc=mykdc.myrealm.me
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;ldap-plain:7010764a78ee04293fe005f4d2277400&#34;&gt;LDAP (PLAIN)&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.mongodb.com/products/mongodb-enterprise&#34;&gt;MongoDB Enterprise&lt;/a&gt; supports proxy authentication through a Lightweight Directory
+Access Protocol (LDAP) service.  To create a credential of type &lt;a href=&#34;http://docs.mongodb
+.org/manual/core/authentication/#ldap-proxy-authority-authentication&#34;&gt;LDAP&lt;/a&gt; use the following static factory method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;String user;          // The LDAP user name
+char[] password;      // The LDAP password
+// ...
+MongoCredential credential = MongoCredential.createPlainCredential(user, &amp;quot;$external&amp;quot;, password);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that the method refers to the &lt;code&gt;plain&lt;/code&gt; authentication mechanism instead of &lt;code&gt;LDAP&lt;/code&gt; because technically the driver is authenticating
+via the &lt;a href=&#34;https://www.ietf.org/rfc/rfc4616.txt&#34;&gt;PLAIN&lt;/a&gt; SASL mechanism.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Upgrading to 3.0</title>
+      <link>/mongo-java-driver/3.0/reference/upgrading/</link>
+      <pubDate>Thu, 19 Mar 2015 12:53:39 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/upgrading/</guid>
+      <description>
+
+&lt;h1 id=&#34;upgrading-to-3-0:104d6ec20d3c9fec84381edf43ec4f2f&#34;&gt;Upgrading to 3.0&lt;/h1&gt;
+
+&lt;p&gt;Compatibility with the 2.x driver release series has been intentionally broken by this release.  Where possible, breaking changes have been
+deprecated in the 2.13 driver series, so before upgrading to 3.0.0 please first compile against 2.13.0 with deprecation warnings enabled and
+remove use of any deprecated methods or classes.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s a list of the most significant backwards-breaking changes:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;SSL host name verification has been enabled by default: the driver now enables host name verification by default for SSL connections.  If
+you are using an invalid certificate, set the MongoClientOptions.sslInvalidHostNameAllowed property to true.&lt;/li&gt;
+&lt;li&gt;The requestStart and requestDone methods in com.mongodb.DB have been removed: These methods have been removed in accordance with the
+&lt;a href=&#34;https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst#what-happened-to-pinning&#34;&gt;server selection specification&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;ServerAddress and MongoClient constructors no longer throw UnknownHostException: This breaks source but not binary compatibility, so
+re-compilation with 3.0 will only succeed after removing any reference to this exception in catch blocks or method throws declarations.&lt;/li&gt;
+&lt;li&gt;The getLastError method in com.mongodb.WriteResult has been removed: this method does not work reliably in the 2.x series, so we decided
+to remove it.&lt;/li&gt;
+&lt;li&gt;The autoConnectRetry and maxAutoConnectRetryTime properties in MongoClientOptions have been removed: these methods have been the source
+of much confusion to users, who typically think it&amp;rsquo;s about re-connecting to the primary during an election.  As no other MongoDB-supported
+drivers support these properties, they have been removed.&lt;/li&gt;
+&lt;li&gt;The authenticate method in com.mongodb.DB have been removed: replace with use of MongoClient constructors that take MongoCredential
+instances.&lt;/li&gt;
+&lt;li&gt;The ensureIndex methods in com.mongodb.DBCollection have been removed: replace with the corresponding createIndex method&lt;/li&gt;
+&lt;li&gt;The fetch method in com.mongodb.DBRef has been removed: replace with DBCollection.findOne&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>What&#39;s New in 3.0</title>
+      <link>/mongo-java-driver/3.0/reference/what-is-new/</link>
+      <pubDate>Thu, 19 Mar 2015 12:53:35 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/what-is-new/</guid>
+      <description>
+
+&lt;h1 id=&#34;what-s-new-in-3-0:a1757eb225ac0a803f7a204b80938387&#34;&gt;What&amp;rsquo;s New in 3.0&lt;/h1&gt;
+
+&lt;p&gt;The 3.0 driver ships with a host of new features, including:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A generic &lt;a href=&#34;http://api.mongodb.org/java/3.0/com/mongodb/client/MongoCollection.html&#34;&gt;MongoCollection&lt;/a&gt; interface that complies with a new cross-driver &lt;a href=&#34;https://github.com/mongodb/specifications/blob/master/source/crud/crud.rst&#34;&gt;CRUD specification&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;A new &lt;a href=&#34;https://github.com/mongodb/mongo-java-driver/tree/master/driver-async&#34;&gt;asynchronous API&lt;/a&gt; that can leverage either &lt;a href=&#34;http://netty.io/&#34;&gt;Netty&lt;/a&gt;
+or Java 7&amp;rsquo;s &lt;a href=&#34;http://docs.oracle.com/javase/7/docs/api/java/nio/channels/AsynchronousSocketChannel.html&#34;&gt;AsynchronousSocketChannel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;A new &lt;a href=&#34;http://api.mongodb.org/java/3.0/org/bson/codecs/Codec.html&#34;&gt;Codec&lt;/a&gt; infrastructure that you can use to build high-performance
+encoders and decoders without requiring an intermediate Map instance.&lt;/li&gt;
+&lt;li&gt;A new core driver on top of which you can build alternative or experimental driver APIs&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Connecting</title>
+      <link>/mongo-java-driver/3.0/reference/connecting/</link>
+      <pubDate>Thu, 19 Mar 2015 12:53:30 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/connecting/</guid>
+      <description>
+
+&lt;h1 id=&#34;connecting:d67a243cdf521fafcb45cf3f560d3e12&#34;&gt;Connecting&lt;/h1&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Monitoring</title>
+      <link>/mongo-java-driver/3.0/reference/monitoring/</link>
+      <pubDate>Thu, 19 Mar 2015 12:53:26 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/monitoring/</guid>
+      <description>
+
+&lt;h1 id=&#34;monitoring:cc05611fd873a7cd9f74d7c5b2563b10&#34;&gt;Monitoring&lt;/h1&gt;
+
+&lt;p&gt;The driver uses &lt;a href=&#34;http://docs.oracle.com/javase/8/docs/technotes/guides/jmx/&#34;&gt;JMX&lt;/a&gt; to create
+&lt;a href=&#34;http://docs.oracle.com/javase/tutorial/jmx/mbeans/mxbeans.html&#34;&gt;MXBeans&lt;/a&gt; that allow an
+application or end user to monitor various aspects of the driver.&lt;/p&gt;
+
+&lt;p&gt;The driver creates MXBean instances of a single type:
+&lt;a href=&#34;http://api.mongodb.org/java/3.0/com/mongodb/management/ConnectionPoolStatisticsMBean.html&#34;&gt;ConnectionPoolStatisticsMBean&lt;/a&gt;.  The driver
+registers one instance of this MXBean interface per server that it is connected to.  So in the case of a replica set, for example, there
+will be an instance per non-hidden member of the replica set.&lt;/p&gt;
+
+&lt;p&gt;Each MXBean instance is required to be registered with a unique object name. All MBean instances created by the driver are under the
+domain &lt;code&gt;org.mongodb.driver&lt;/code&gt;.  Instances of &lt;code&gt;ConnectionPoolStatisticsMBean&lt;/code&gt; will have the properties:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;clusterId&lt;/code&gt;: a client-generated unique identifier that is required for to ensure object name uniqueness in situations where an
+application has mulitiple &lt;code&gt;MongoClient&lt;/code&gt; instances connection to the same MongoDB server deployment&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;host&lt;/code&gt;: the host name of the server.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;port&lt;/code&gt;: the port the server is listening on&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Logging</title>
+      <link>/mongo-java-driver/3.0/reference/logging/</link>
+      <pubDate>Wed, 18 Mar 2015 21:14:20 -0400</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/logging/</guid>
+      <description>
+
+&lt;h1 id=&#34;logging:3f3af53408cff75953b33723c0b061bb&#34;&gt;Logging&lt;/h1&gt;
+
+&lt;p&gt;By default logging is enabled via the popular &lt;a href=&#34;http://www.slf4j.org/&#34;&gt;SLF4J&lt;/a&gt; API.  But it&amp;rsquo;s optional: if the driver detects the presence of
+SLF4J on the classpath it will use it. Otherwise, it will fall back to JUL (&lt;code&gt;java.util.logging&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;The driver uses the following logger names:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;org.mongodb.driver&lt;/code&gt;: the root logger
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;cluster&lt;/code&gt;: for logs related to monitoring of the MongoDB servers to which the driver connects&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;connection&lt;/code&gt;: for logs related to connections and connection pools&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;protocol&lt;/code&gt;: for logs related to protocol message sent to and received from a MongoDB server
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;insert&lt;/code&gt;: for logs related to insert messages and responses&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;update&lt;/code&gt;: for logs related to update messages and responses&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;delete&lt;/code&gt;: for logs related to delete messages and responses&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;query&lt;/code&gt;: for logs related to query messages and responses&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;getmore&lt;/code&gt;: for logs related to getmore messages and responses&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;killcursor&lt;/code&gt;: for logs related to killcursor messages and responses&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;command&lt;/code&gt;: for logs related to command messages and responses&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;uri&lt;/code&gt;: for logs related to connection string parsing&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;management&lt;/code&gt;: for logs related to JMX&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Reference</title>
+      <link>/mongo-java-driver/3.0/reference/</link>
+      <pubDate>Tue, 17 Mar 2015 15:36:56 +0000</pubDate>
+      
+      <guid>/mongo-java-driver/3.0/reference/</guid>
+      <description>
+
+&lt;h2 id=&#34;reference-page-index:d680e8a854a7cbad6d490c445cba2eba&#34;&gt;Reference Page index&lt;/h2&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="keyword" content="">
+
+    <link rel="shortcut icon" href="/mongo-java-driver/3.0/img/favicon.png">
+
+    <title>Upgrading to 3.0</title>
+
+    <link rel="stylesheet" href="/mongo-java-driver/3.0/css/bootstrap-custom.css" type="text/css" />
+<link rel="stylesheet" href="/mongo-java-driver/3.0/lib/icomoon.css" type="text/css" />
+<link rel="stylesheet" href="/mongo-java-driver/3.0/lib/font-awesome//css/font-awesome.min.css" type="text/css" />
+<link rel="stylesheet" href="/mongo-java-driver/3.0/lib/tipsy.css" type="text/css" />
+<link rel="stylesheet" href="/mongo-java-driver/3.0/css/mongodb-docs.css" type="text/css" />
+<link rel="stylesheet" href="/mongo-java-driver/3.0/css/overrides.css" type="text/css" />
+
+  </head>
+
+  <body>
+  
+  <section id="container" class="">
+      
+      <header id="header-db" class="row" role="navigation">
+  <div class="header-content">
+    <div class="toggle-nav pull-left">
+        <i class="fa fa-bars"></i>
+        <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"></div>
+    </div>
+    
+    <div class="logo pull-left">
+      <a href="/mongo-java-driver/3.0">
+        <img src="/mongo-java-driver/3.0/img/logo-mongodb-header.png", alt="MongoDB.org" />
+      </a>
+    </div>
+    
+    <div>
+<div class="nav-items pull-right">
+  <a href="http://try.mongodb.org/">Try it Out</a>
+  <a href="http://www.mongodb.org/downloads">Downloads</a>
+  <a href="http://www.mongodb.org/get-involved">Community</a>
+  <a href="http://blog.mongodb.org">Blog</a>
+</div>
+</div>
+
+  </div>
+</header>
+
+      
+
+      
+<aside id="sidebar" class="sidebar">
+    <div class="ssidebar nav-collapse">
+      <div class="ssidebarwrapper">
+        <h3>
+          <a class="index-link" href="/mongo-java-driver/3.0">MongoDB Java Driver</a>
+          <a class="version pull-right" href="">3.0</a>
+        </h3>
+
+        
+        <ul class="sidebar-menu">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+
+          
+          
+            
+            
+
+
+
+
+
+
+
+
+
+  
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+  
+
+
+      
+    
+  
+
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+  
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+  
+
+
+      
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+    
+    
+    
+      
+    
+  
+  
+
+
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+  
+
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+  
+
+
+          
+
+          
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1 ">
+  <a href="/mongo-java-driver/3.0/tutorial/" class="">
+      <i class='fa fa-road'></i>
+      <span>Getting Started</span>
+      <span class="menu-arrow fa fa-angle-right"></span>
+  </a>
+  
+
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1  current">
+  <a href="/mongo-java-driver/3.0/reference/" class="">
+      <i class='fa fa-book'></i>
+      <span>Reference</span>
+      <span class="menu-arrow fa fa-angle-down"></span>
+  </a>
+  
+    <ul  class="current">
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/reference/what-is-new/">
+        <i class='fa'></i>
+        What&#39;s New in 3.0
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/reference/upgrading/">
+        <i class='fa'></i>
+        Upgrading to 3.0
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/reference/connecting/">
+        <i class='fa'></i>
+        Connecting
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/reference/authenticating/">
+        <i class='fa'></i>
+        Authenticating
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/reference/logging/">
+        <i class='fa'></i>
+        Logging
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l2">
+    <a href="/mongo-java-driver/3.0/reference/monitoring/">
+        <i class='fa'></i>
+        Monitoring
+    </a>
+  </li>
+
+
+        
+        
+    </ul>
+  </li>
+  
+
+
+          
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l1">
+    <a href="/mongo-java-driver/3.0/issues-help/">
+        <i class='fa fa-life-ring'></i>
+        Issues &amp; Help
+    </a>
+  </li>
+
+
+          
+        </ul>
+        
+    </div>
+  </div>
+  <div class="nav-footer">
+  <a href="../../../../about/">About</a> |
+  <a href="../../../../contents/">Contents</a> |
+  <a href="../../../../genindex/">Index</a>
+</div>
+
+</aside>
+
+
+
+
+
+
+      
+      <section id="main-content" class="content">
+          <section class="main-column pull-left">
+            <div class="document">
+              <div class="documentwrapper">
+                <div class="bodywrapper">
+                  <div class="body">
+
+
+  
+<a class="edit-link" href="https://github.com/mongodb/mongo-java-driver/docs/content/reference/upgrading.md" target="_blank" title="Edit reference/upgrading.md on GitHub"><span class="icon-edit"></span></a>
+
+
+
+
+
+
+
+
+
+
+<div class="bc">
+<ul>
+  
+  
+  
+  
+  
+  <li><a href="/mongo-java-driver/3.0/reference/">Reference</a> <i class="fa fa-angle-right"></i></li>
+  <li>Upgrading to 3.0</li>
+</ul>
+</div>
+
+
+
+
+<h1 id="upgrading-to-3-0:104d6ec20d3c9fec84381edf43ec4f2f">Upgrading to 3.0</h1>
+
+<p>Compatibility with the 2.x driver release series has been intentionally broken by this release.  Where possible, breaking changes have been
+deprecated in the 2.13 driver series, so before upgrading to 3.0.0 please first compile against 2.13.0 with deprecation warnings enabled and
+remove use of any deprecated methods or classes.</p>
+
+<p>Here&rsquo;s a list of the most significant backwards-breaking changes:</p>
+
+<ul>
+<li>SSL host name verification has been enabled by default: the driver now enables host name verification by default for SSL connections.  If
+you are using an invalid certificate, set the MongoClientOptions.sslInvalidHostNameAllowed property to true.</li>
+<li>The requestStart and requestDone methods in com.mongodb.DB have been removed: These methods have been removed in accordance with the
+<a href="https://github.com/mongodb/specifications/blob/master/source/server-selection/server-selection.rst#what-happened-to-pinning">server selection specification</a>.</li>
+<li>ServerAddress and MongoClient constructors no longer throw UnknownHostException: This breaks source but not binary compatibility, so
+re-compilation with 3.0 will only succeed after removing any reference to this exception in catch blocks or method throws declarations.</li>
+<li>The getLastError method in com.mongodb.WriteResult has been removed: this method does not work reliably in the 2.x series, so we decided
+to remove it.</li>
+<li>The autoConnectRetry and maxAutoConnectRetryTime properties in MongoClientOptions have been removed: these methods have been the source
+of much confusion to users, who typically think it&rsquo;s about re-connecting to the primary during an election.  As no other MongoDB-supported
+drivers support these properties, they have been removed.</li>
+<li>The authenticate method in com.mongodb.DB have been removed: replace with use of MongoClient constructors that take MongoCredential
+instances.</li>
+<li>The ensureIndex methods in com.mongodb.DBCollection have been removed: replace with the corresponding createIndex method</li>
+<li>The fetch method in com.mongodb.DBRef has been removed: replace with DBCollection.findOne</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+</section>
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+   URL_ROOT:    "/mongo-java-driver/3.0",
+   VERSION:     "",
+   COLLAPSE_INDEX: false,
+   FILE_SUFFIX: '.html',
+   HAS_SOURCE:  true,
+  };
+</script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/js/jquery.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/js/underscore.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/js/doctools.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/lib/bootstrap.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/lib/jquery.tipsy.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/js/navbar.js"></script>
+<script type="text/javascript" src="/mongo-java-driver/3.0/js/scripts.js"></script>
+
+
+
+</body>
+</html>
+
