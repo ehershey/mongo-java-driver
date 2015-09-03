@@ -2503,6 +2503,7 @@ constructing a <code>MongoClient</code>.  However, this host name verification r
                                            .enabled(true)                 
                                            .invalidHostNameAllowed(true)  
                                            .build())                      
+                   .streamFactoryFactory(new NettyStreamFactoryFactory())
                    .build()                                              
 </code></pre>
 
