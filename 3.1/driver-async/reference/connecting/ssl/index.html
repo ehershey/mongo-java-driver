@@ -448,6 +448,33 @@
 
 
   
+
+
+        
+          
+        
+      
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
     
     
       
@@ -1312,6 +1339,35 @@
     <a href="/mongo-java-driver/3.1/driver/reference/crud/">
         <i class='fa'></i>
         CRUD Operations
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.1/driver/reference/gridfs/">
+        <i class='fa'></i>
+        GridFS
     </a>
   </li>
 
@@ -2419,22 +2475,21 @@
 
 <h2 id="ssl">SSL</h2>
 
-<p>The Java driver supports SSL connections to MongoDB servers using the underlying support for SSL provided by the JDK. You can configure
-the driver to use SSL either with <code>ConnectionString</code> or with <code>MongoClientSettings</code>.</p>
-
-<p>With <code>ConnectionString</code>, specify `ssl=true as a query parameter, as in:</p>
-
-<pre><code class="language-java">new ConnectionString(&quot;mongodb://localhost/?ssl=true&quot;)
-</code></pre>
-
-<p>With <code>MongoClientSettings</code>, set the sslEnabled property to true, as in:</p>
+<p>The async Java driver supports SSL connections to MongoDB servers using the underlying support for SSL provided by
+<a href="http://netty .io/">Netty</a>. You can configure the driver to use SSL with <code>MongoClientSettings</code> by setting the sslEnabled property to true
+and the stream factory to <a href="http://api.mongodb.org/java/3.1/?com/mongodb/connection/netty/NettyStreamFactoryFactory.html
+"><code>NettyStreamFactoryFactory</code></a>, as in:</p>
 
 <pre><code class="language-java">MongoClientSettings.builder()                                                  
                    .sslSettings(SslSettings.builder()
                                            .enabled(true)
                                            .build())   
+                   .streamFactoryFactory(new NettyStreamFactoryFactory())
                    .build()                                                    
 </code></pre>
+
+<p>See <a href="/mongo-java-driver/3.1/driver-async/reference/connecting/connection-settings/#netty-configuration">Netty Configuration</a> for details on
+configuring Netty.</p>
 
 <h3 id="host-name-verification">Host name verification</h3>
 
