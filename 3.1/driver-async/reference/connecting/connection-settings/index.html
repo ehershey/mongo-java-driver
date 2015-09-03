@@ -448,6 +448,33 @@
 
 
   
+
+
+        
+          
+        
+      
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+  
     
     
       
@@ -1288,6 +1315,35 @@
     <a href="/mongo-java-driver/3.1/driver/reference/crud/">
         <i class='fa'></i>
         CRUD Operations
+    </a>
+  </li>
+
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li class="toctree-l3">
+    <a href="/mongo-java-driver/3.1/driver/reference/gridfs/">
+        <i class='fa'></i>
+        GridFS
     </a>
   </li>
 
@@ -2485,6 +2541,39 @@ MongoClientSettings settings = MongoClientSettings.builder().clusterSettings(clu
 MongoClient client = MongoClients.create(settings);
 </code></pre>
 
+<h3 id="netty">Netty</h3>
+
+<p>By default, the async driver relies on the
+<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/AsynchronousSocketChannel.html"><code>AsynchronousSocketChannel</code></a> class, introduced
+in Java 7.  If configured properly, the driver will use <a href="http://netty.io/">Netty</a> instead.  An application must use Netty for the
+following reasons:</p>
+
+<ul>
+<li>The application is configured to use SSL to communicate with the MongoDB server.</li>
+<li>The application runs on Java 6.</li>
+</ul>
+
+<p>To configure the driver to use Netty, the application must configure the MongoClientSettings appropriately:</p>
+
+<pre><code class="language-java">MongoClientSettings.builder()
+                   .streamFactoryFactory(new NettyStreamFactoryFactory())
+                   .build();
+         
+</code></pre>
+
+<p>By default the Netty-based streams will use the <a href="http://netty.io/4.0/api/io/netty/channel/nio/NioEventLoopGroup.html">NioEventLoopGroup</a>
+and Netty&rsquo;s <a href="http://netty.io/4.0/api/io/netty/buffer/ByteBufAllocator.html#DEFAULT">default <code>ByteBufAllocator</code></a>, but these are
+configurable via the <a href="http://api.mongodb.org/java/3.1/?com/mongodb/connection/netty/NettyStreamFactoryFactory.html
+"><code>NettyStreamFactoryFactory</code></a> constructor.</p>
+
+<p><div class="admonition note">
+<h5 class="admonition-title">Note</h5>
+<p>Netty may also be configured by setting the <code>org.mongodb.async.type</code> system property to <code>netty</code>, but this should be considered as
+deprecated as of the 3.1 driver release.</p>
+
+</div>
+</p>
+
 
 
 
@@ -2526,6 +2615,7 @@ MongoClient client = MongoClients.create(settings);
 <li><a href="#options">Options</a></li>
 </ul></li>
 <li><a href="#mongoclient">MongoClient</a></li>
+<li><a href="#netty">Netty</a></li>
 </ul></li>
 </ul></li>
 </ul>
