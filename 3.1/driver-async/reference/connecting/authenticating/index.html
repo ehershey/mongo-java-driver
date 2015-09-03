@@ -2549,7 +2549,7 @@ more information about determining the subject name from the certificate.</p>
 
 <h2 id="kerberos-gssapi">Kerberos (GSSAPI)</h2>
 
-<p><a href="http://www.mongodb.com/products/mongodb-enterprise">MongoDB Enterprise</a> supports proxy authentication through Kerberos service.  To
+<p><a href="http://www.mongodb.com/products/mongodb-enterprise">MongoDB Enterprise</a> supports proxy authentication through a Kerberos service.  To
 create a credential of type <a href="http://docs.mongodb.org/manual/core/authentication/#kerberos-authentication">Kerberos (GSSAPI)</a> use the
 following static factory method:</p>
 
@@ -2565,7 +2565,8 @@ MongoCredential credential = MongoCredential.createGSSAPICredential(user);
 
 <p><div class="admonition note">
 <h5 class="admonition-title">Note</h5>
-<p>The method refers to the <code>GSSAPI</code> authentication mechanism instead of <code>Kerberos</code> because technically the driver is authenticating via the <a href="https://tools.ietf.org/html/rfc4752">GSSAPI</a> SASL mechanism.</p>
+<p>The method refers to the <code>GSSAPI</code> authentication mechanism instead of <code>Kerberos</code> because technically the driver is authenticating via the
+<a href="https://tools.ietf.org/html/rfc4752">GSSAPI</a> SASL mechanism.</p>
 
 </div>
 </p>
@@ -2576,6 +2577,19 @@ Java libraries can acquire a Kerberos ticket:</p>
 <pre><code>java.security.krb5.realm=MYREALM.ME
 java.security.krb5.kdc=mykdc.myrealm.me
 </code></pre>
+
+<p><div class="admonition note">
+<h5 class="admonition-title">Note</h5>
+<p>The <code>GSSAPI</code> authentication mechanism is supported only in the following environments:</p>
+
+<ul>
+<li>Linux: Java 6 and above</li>
+<li>Windows: Java 7 and above with <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa380493">SSPI</a></li>
+<li>OS X: Java 7 and above</li>
+</ul>
+
+</div>
+</p>
 
 <h2 id="ldap-plain">LDAP (PLAIN)</h2>
 
